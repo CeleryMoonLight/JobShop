@@ -1,0 +1,3 @@
+
+PROJECT(JobShop)
+ADD_SUBDIRECTORY(src)
