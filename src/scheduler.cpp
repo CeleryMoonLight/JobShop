@@ -1,6 +1,21 @@
 #include "scheduler.h"
-#include <iostream>
 
 Scheduler::Scheduler() {
-    std::cout << "Scheduler Constructed! " << std::endl;
+
+}
+
+Scheduler::Scheduler(IOptimizer *optimizer) {
+
+}
+
+Scheduler::~Scheduler() {
+
+}
+
+void Scheduler::Feed() {
+
+}
+
+void Scheduler::Run() {
+
 }
