@@ -1,3 +1,10 @@
+/**
+ * @brief Class Job
+ * 
+ * @file job.h
+ * @author Jason Qiu
+ * @date 2018-05-01
+ */
 #ifndef _JOB_H_
 #define _JOB_H_
 

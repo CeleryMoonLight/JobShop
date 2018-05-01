@@ -1,3 +1,10 @@
+/**
+ * @brief Class Scheduler
+ * 
+ * @file scheduler.h
+ * @author Jason Qiu
+ * @date 2018-05-01
+ */
 #ifndef _SCHEDULER_H_
 #define _SCHEDULER_H_
 
@@ -6,6 +13,11 @@
 class Scheduler {
 public:
     Scheduler();
+    /**
+     * @brief Construct a new Scheduler object
+     * 
+     * @param optimizer 
+     */
     explicit Scheduler(IOptimizer *optimizer);
     ~Scheduler();
     void Feed();

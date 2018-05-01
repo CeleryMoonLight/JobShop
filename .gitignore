@@ -340,3 +340,6 @@ CTestTestfile.cmake
 .vscode
 build/*
 !build/.gitkeep
+doc/*
+!doc/.gitkeep
+Doxyfile
