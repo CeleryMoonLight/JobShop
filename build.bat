@@ -9,6 +9,7 @@ IF %ERRORLEVEL% NEQ 0 (
     ECHO CMake was found.
     IF NOT EXIST build (
         MD build
+        CD .>.gitkeep
     )
     CD build
     cmake ..
