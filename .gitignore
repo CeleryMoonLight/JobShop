@@ -341,5 +341,4 @@ CTestTestfile.cmake
 build/*
 !build/.gitkeep
 doc/*
-!doc/.gitkeep
-Doxyfile
+!doc/Doxyfile
