@@ -1,5 +1,5 @@
 /**
- * @brief 此文件定义了 I/O 相关的操作。
+ * @brief 定义 I/O 相关操作。
  * 
  * @file file.h
  * @author Jason Qiu
@@ -18,7 +18,7 @@
  * @param path 文件路径。
  */
 void read_from_file(
-    OUT order *input_order, 
+    OUT order_t *input_order, 
     IN const char *path
 );
 
@@ -28,7 +28,7 @@ void read_from_file(
  * @param input_order 读入的订单信息所要存储的 order。
  */
 void read_from_console(
-    OUT order *input_order
+    OUT order_t *input_order
 );
 
 #endif // !_FILE_H_
