@@ -1,7 +1,8 @@
 #include "operation.h"
 
-Operation::Operation() {
-
+Operation::Operation(int period, int machine) {
+    period_ = period;
+    machine_ = machine;
 }
 
 Operation::~Operation() {

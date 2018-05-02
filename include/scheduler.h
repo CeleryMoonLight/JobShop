@@ -21,7 +21,7 @@ public:
     explicit Scheduler(IOptimizer *optimizer);
     ~Scheduler();
     void Feed();
-    void Run();
+    void Run(IOptimizer *optimizer);
 private:
     Scheduler(const Scheduler &);
     Scheduler &operator=(const Scheduler &);

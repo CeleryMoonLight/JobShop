@@ -1,8 +1,14 @@
 #include <iostream>
-#include "scheduler.h"
+#include "jobshop.h"
 
 int main(int argc, char *argv[]) {
-    std::cout << "Hello Job Shop! " << std::endl;
-    Scheduler scheduler;
+    Scheduler *scheduler = new Scheduler();
+    ConsoleReader *reader = new ConsoleReader();
+    scheduler->Feed(/* Data */);
+    GreedyOptimizer *optimizer = new GreedyOptimizer();
+    scheduler->Run(optimizer);
+    delete optimizer;
+    delete reader;
+    delete scheduler;
     return 0;
 }

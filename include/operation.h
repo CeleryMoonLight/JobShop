@@ -8,12 +8,15 @@
 #ifndef _OPERATION_H_
 #define _OPERATION_H_
 
+class Job;
+
 class Operation {
 public:
-    Operation();
+    Operation(int period, int machine);
     ~Operation();
-private:
-
+    int period_;
+    int machine_;
+    Job *job_ = nullptr;
 };
 
 #endif /* end of _OPERATION_H_ */

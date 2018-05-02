@@ -16,6 +16,6 @@ void Scheduler::Feed() {
 
 }
 
-void Scheduler::Run() {
+void Scheduler::Run(IOptimizer *optimizer) {
 
 }
