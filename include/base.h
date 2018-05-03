@@ -27,7 +27,7 @@ typedef struct {
  * @note operations 在读入数据时初始化，在 order_t 销毁时销毁。
  */
 typedef struct {
-    operation **operations; /**< @brief 储存所有 operation_t 的指针数组。 */
+    operation_t **operations; /**< @brief 储存所有 operation_t 的指针数组。 */
     int num_of_jobs;        /**< @brief 表示共有多少个产品。 */
     int num_of_machines;    /**< @brief 表示共有多少台机器。 */
 } order_t;
