@@ -1,3 +1,11 @@
+/**
+ * @brief Implementation of file.h
+ * 
+ * @file file.c
+ * @author Celery Meng
+ * @date 2018-05-03
+ */
+
 #include "file.h"
 #include <stdio.h>
 
