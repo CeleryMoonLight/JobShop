@@ -1,14 +1,11 @@
 #include "file.h"
 #include <stdio.h>
 
-order_t *new_order() {
-	order_t *order = (order_t*)malloc(sizeof(order_t));
-	if (order == NULL) {   /*Èç¹û¶¯Ì¬·ÖÅä¿Õ¼äÊ§°Ü*/
-		return NULL;
-	}		
-	return order;
-}
+#define MAX_JOBS_SIZE 100
 
+order_t *new_order() {
+	return (order_t*)malloc(sizeof(order_t));
+}
 
 int change_from_char_to_num() {
 	char ch;
@@ -22,28 +19,25 @@ int change_from_char_to_num() {
 	return num;
 }
 
-void read_from_console(order_t *test_order) {
+void read_from_console(order_t *input_order) {
 	char ch;
-	int i;                 /*Ñ­»·±äÁ¿*/
+	int i;                 /*å¾ªç¯å˜é‡*/
 	int a;
-	scanf("%d", &(test_order->num_of_jobs));       /*ÊäÈë²úÆ·²ÎÊı*/
-	scanf("%d", &(test_order->num_of_machines));  /*ÊäÈë»úÆ÷ÊıÄ¿*/
-	test_order->operations = (operation_t**)malloc(sizeof(operation_t*) * test_order->num_of_jobs);  //ÎªÖ¸ÕëÊı×é¶¯Ì¬·ÖÅä¿Õ¼ä 
-	for (i = 0; i < test_order->num_of_jobs; i++) {
-		test_order->operations[i] = (operation_t*)malloc(sizeof(operation_t) * 10);  //ÎªÊı×éÖĞµÄÔªËØ·ÖÅä¿Õ¼ä 
-		if (test_order->operations[i] == NULL) {
-			printf("·ÖÅäÊ§°Ü\n");
-		}
+	scanf("%d", &(input_order->num_of_jobs));       /*è¾“å…¥äº§å“å‚æ•°*/
+	scanf("%d", &(input_order->num_of_machines));  /*è¾“å…¥æœºå™¨æ•°ç›®*/
+	input_order->operations = (operation_t**)malloc(sizeof(operation_t*) * input_order->num_of_jobs);  //ä¸ºæŒ‡é’ˆæ•°ç»„åŠ¨æ€åˆ†é…ç©ºé—´ 
+	for (i = 0; i < input_order->num_of_jobs; i++) {
+		input_order->operations[i] = (operation_t*)malloc(sizeof(operation_t) * MAX_JOBS_SIZE);  //ä¸ºæ•°ç»„ä¸­çš„å…ƒç´ åˆ†é…ç©ºé—´ 
 	}
-	for (i = 0; i < test_order->num_of_jobs; i++) {
+	for (i = 0; i < input_order->num_of_jobs; i++) {
 		a = 0;
 		int b;
 		scanf("%d", &b);
 		ch = getchar();
 		while (1) {
 			if (ch == '(') {
-				(test_order->operations[i][a]).period = change_from_char_to_num(getchar());
-				(test_order->operations[i][a]).machine = change_from_char_to_num(getchar());
+				(input_order->operations[i][a]).period = change_from_char_to_num(getchar());
+				(input_order->operations[i][a]).machine = change_from_char_to_num(getchar());
 				a++;
 				ch = getchar();
 			}
@@ -62,20 +56,20 @@ void read_from_file(order_t *input_order, const char *path) {
 	}
 	rewind(fp);
 	char ch;
-	int index;                 /*Ñ­»·±äÁ¿*/
+	int index;                 /*å¾ªç¯å˜é‡*/
 	int num_of_precedure;
-	input_order->num_of_jobs = file_change_from_char_to_num(fp);       /*ÊäÈë²úÆ·²ÎÊı*/
-	input_order->num_of_machines = file_change_from_char_to_num(fp);  /*ÊäÈë»úÆ÷ÊıÄ¿*/
-	input_order->operations = (operation_t**)malloc(sizeof(operation_t*) * input_order->num_of_jobs);  //ÎªÖ¸ÕëÊı×é¶¯Ì¬·ÖÅä¿Õ¼ä 
+	input_order->num_of_jobs = file_change_from_char_to_num(fp);       /*è¾“å…¥äº§å“å‚æ•°*/
+	input_order->num_of_machines = file_change_from_char_to_num(fp);  /*è¾“å…¥æœºå™¨æ•°ç›®*/
+	input_order->operations = (operation_t**)malloc(sizeof(operation_t*) * input_order->num_of_jobs);  //ä¸ºæŒ‡é’ˆæ•°ç»„åŠ¨æ€åˆ†é…ç©ºé—´ 
 	for (index = 0; index <input_order->num_of_jobs; index++) {
-		input_order->operations[index] = (operation_t*)malloc(sizeof(operation_t) * 10);  //ÎªÊı×éÖĞµÄÔªËØ·ÖÅä¿Õ¼ä 
+		input_order->operations[index] = (operation_t*)malloc(sizeof(operation_t) * 10);  //ä¸ºæ•°ç»„ä¸­çš„å…ƒç´ åˆ†é…ç©ºé—´ 
 		if (input_order->operations[index] == NULL) {
-			printf("·ÖÅäÊ§°Ü\n");
+			printf("åˆ†é…å¤±è´¥\n");
 		}
 	}
 	for (index = 0; index < input_order->num_of_jobs; index++) {
 		num_of_precedure = 0;
-		(input_order->operations[index][num_of_precedure]).job = file_change_from_char_to_num(fp);   //²úÆ·ĞòºÅ 
+		(input_order->operations[index][num_of_precedure]).job = file_change_from_char_to_num(fp);   //äº§å“åºå· 
 		ch = fgetc(fp);
 		while (1) {
 			if (ch == '(') {
@@ -103,10 +97,11 @@ int file_change_from_char_to_num(FILE *fp) {
 	return num;
 }
 
-void delete_order(order_t *test_order)
+void delete_order(order_t *to_be_deleted)
 {
-	for (int i = 0; i < test_order->num_of_jobs; i++) {
-		free(test_order->operations[i]);
+	for (int i = 0; i < to_be_deleted->num_of_jobs; i++) {
+		free(to_be_deleted->operations[i]);
 	}
-	free(test_order);
+    free(to_be_deleted->operations);
+	free(to_be_deleted);
 }
