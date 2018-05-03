@@ -15,8 +15,11 @@
  * @return int 程序运行无错误返回 0，否则返回非 0 值。
  */
 int main() {
-    order_t *test_order = create_order();
-    read_from_console(&test_order);
-    destroy_order(test_order);
+    order_t *test_order = new_order();
+//    read_from_console(test_order);
+	char path[30];
+	gets(path);
+    read_from_file(test_order,path);
+    delete_order(test_order);
     return 0;
 }
