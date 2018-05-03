@@ -36,6 +36,7 @@ typedef struct {
  * @brief 创建 order_t 对象。
  * 
  * @return order_t* 指向创建的 order_t 对象的指针。
+ * @author Celery Meng
  */
 order_t *new_order(
 );
@@ -44,6 +45,7 @@ order_t *new_order(
  * @brief 销毁 order_t 对象。
  * 
  * @param to_be_deleted 要被销毁的 order_t 对象。
+ * @author Celery Meng
  */
 void delete_order(
     IN OUT order_t *to_be_deleted

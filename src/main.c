@@ -16,10 +16,7 @@
  */
 int main() {
     order_t *test_order = new_order();
-//    read_from_console(test_order);
-	char path[30];
-	gets(path);
-    read_from_file(test_order,path);
+    read_from_console(test_order);
     delete_order(test_order);
     return 0;
 }

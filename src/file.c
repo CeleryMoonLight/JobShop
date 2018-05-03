@@ -9,95 +9,78 @@
 #include "file.h"
 #include <stdio.h>
 #include <stdbool.h>
+#include <ctype.h>
 
-#define MAX_JOBS_SIZE 100
+#define MAX_JOBS_SIZE 128
+#define BUFFER_SIZE 1024
+#define INPUT_STATE_NUM 0
+#define INPUT_STATE_COMMA 1
 
-int change_from_char_to_num() {
-    char ch;
-    ch = getchar();
-    int num = 0;
-    while (ch >= '0' && ch <= '9') {
-        num = num * 10 + (ch - '0');
-        ch = getchar();
+bool next_digit(char **forward) {
+    while (**forward != '\0' && isdigit(**forward)) {
+        (*forward)++;
     }
-    printf("%d ", num);
-    return num;
+    while (**forward != '\0' && !isdigit(**forward)) {
+        (*forward)++;
+    }
+    if (**forward == '\0') {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+void read(order_t *input_order, FILE *stream) {
+    static char buffer[BUFFER_SIZE];
+    fscanf(
+        stream,
+        "%d %d",
+        &(input_order->num_of_jobs),
+        &(input_order->num_of_machines)
+    );
+    input_order->operations = (operation_t **)
+        calloc(
+            input_order->num_of_jobs,
+            sizeof(operation_t *)
+        );
+    for (int index = 0; index < input_order->num_of_jobs; index++) {
+        input_order->operations[index] = (operation_t *)
+            calloc(
+                MAX_JOBS_SIZE,
+                sizeof(operation_t)
+            );
+    }
+    char *forward = NULL;
+    bool is_ended = false;
+    for (int index_of_job = 0; index_of_job < input_order->num_of_jobs; index_of_job++) {
+        fscanf(stream, "%*d");
+        fgets(buffer, BUFFER_SIZE, stream);
+        forward = buffer;
+        int index_of_operation = 0;
+        while (true) {
+            is_ended = next_digit(&forward);
+            if (is_ended) {
+                break;
+            }
+            sscanf(forward, "%d", &((input_order->operations[index_of_job][index_of_operation]).period));
+            is_ended = next_digit(&forward);
+            if (is_ended) {
+                break;
+            }
+            sscanf(forward, "%d", &((input_order->operations[index_of_job][index_of_operation]).machine));
+            input_order->operations[index_of_job][index_of_operation].job = index_of_job;
+            index_of_operation++;
+        }
+    }
 }
 
 void read_from_console(order_t *input_order) {
-    char ch;
-    int i;                 /*循环变量*/
-    int a;
-    scanf("%d", &(input_order->num_of_jobs));       /*输入产品参数*/
-    scanf("%d", &(input_order->num_of_machines));  /*输入机器数目*/
-    input_order->operations = (operation_t**)malloc(sizeof(operation_t*) * input_order->num_of_jobs);  //为指针数组动态分配空间 
-    for (i = 0; i < input_order->num_of_jobs; i++) {
-        input_order->operations[i] = (operation_t*)malloc(sizeof(operation_t) * MAX_JOBS_SIZE);  //为数组中的元素分配空间 
-    }
-    for (i = 0; i < input_order->num_of_jobs; i++) {
-        a = 0;
-        int b;
-        scanf("%d", &b);
-        ch = getchar();
-        while (true) {
-            if (ch == '(') {
-                (input_order->operations[i][a]).period = change_from_char_to_num(getchar());
-                (input_order->operations[i][a]).machine = change_from_char_to_num(getchar());
-                a++;
-                ch = getchar();
-            }
-            if (ch == '\n') {
-                break;
-            }
-            ch = getchar();
-        }
-    }
+    read(input_order, stdin);
 }
 
 void read_from_file(order_t *input_order, const char *path) {
     FILE *fp = fopen(path, "r");
-    if (fp == NULL) {
-        printf("Open files failed!\n");
-    }
-    rewind(fp);
-    char ch;
-    int index;                 /*循环变量*/
-    int num_of_precedure;
-    input_order->num_of_jobs = file_change_from_char_to_num(fp);       /*输入产品参数*/
-    input_order->num_of_machines = file_change_from_char_to_num(fp);  /*输入机器数目*/
-    input_order->operations = (operation_t**)malloc(sizeof(operation_t*) * input_order->num_of_jobs);  //为指针数组动态分配空间 
-    for (index = 0; index <input_order->num_of_jobs; index++) {
-        input_order->operations[index] = (operation_t*)malloc(sizeof(operation_t) * 10);  //为数组中的元素分配空间 
-        if (input_order->operations[index] == NULL) {
-            printf("分配失败\n");
-        }
-    }
-    for (index = 0; index < input_order->num_of_jobs; index++) {
-        num_of_precedure = 0;
-        (input_order->operations[index][num_of_precedure]).job = file_change_from_char_to_num(fp);   //产品序号 
-        ch = fgetc(fp);
-        while (true) {
-            if (ch == '(') {
-                (input_order->operations[index][num_of_precedure]).period = file_change_from_char_to_num(fp);
-                (input_order->operations[index][num_of_precedure]).machine = file_change_from_char_to_num(fp);
-                num_of_precedure++;
-                ch = fgetc(fp);
-            }
-            if (ch == '\n') {
-                break;
-            }
-            ch = fgetc(fp);
-        }
-    }
+    read(input_order, fp);
     fclose(fp);
-}
-
-int file_change_from_char_to_num(FILE *fp) {
-    char ch = fgetc(fp);
-    int num = 0;
-    while (ch >= '0' && ch <= '9') {
-        num = num * 10 + (ch - '0');
-        ch = fgetc(fp);
-    }
-    return num;
 }

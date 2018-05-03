@@ -16,6 +16,7 @@
  * 
  * @param input_order 读入的订单信息所要存储的 order。
  * @param path 文件路径。
+ * @author Celery Meng
  */
 void read_from_file(
     OUT order_t *input_order, 
@@ -26,6 +27,7 @@ void read_from_file(
  * @brief 从控制台读入订单信息。
  * 
  * @param input_order 读入的订单信息所要存储的 order。
+ * @author Celery Meng
  */
 void read_from_console(
     OUT order_t *input_order
