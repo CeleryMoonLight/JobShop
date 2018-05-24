@@ -70,10 +70,10 @@ type array_front_##type(const struct _array_##type##_t *array) {\
 type array_back_##type(const struct _array_##type##_t *array) {\
     return *(array->end - 1);\
 }\
-type array_begin_##type(const struct _array_##type##_t *array) {\
+type *array_begin_##type(const struct _array_##type##_t *array) {\
     return array->begin;\
 }\
-type array_end_##type(const struct _array_##type##_t *array) {\
+type *array_end_##type(const struct _array_##type##_t *array) {\
     return array->end;\
 }\
 void array_pop_back_##type(struct _array_##type##_t *array) {\
@@ -113,5 +113,34 @@ p_array_##type##_t new_array_##type(const int capacity) {\
     res->vtable = &array_vtable_##type;\
     return res;\
 }
+
+/**
+ * @brief 指定类型的数组。
+ * 
+ * @param type 给定类型。
+ * @sa new_array
+ */
+#define p_array_t(type) \
+    array_##type##_t *
+/**
+ * @brief 构造指定类型的数组。
+ * 
+ * @param type 给定类型。
+ * @param capacity 数组容量。
+ * @sa p_array_t, delete_array
+ */
+#define new_array(type, capacity)\
+    new_array_##type(capacity)
+/**
+ * @brief 销毁指定的数组。
+ * 
+ * @param pointer 指定数组。
+ * @sa new_queue
+ */
+#define delete_array(pointer)\
+    {\
+        free(pointer->data);\
+        free(pointer);\
+    }
 
 #endif // !_ARRAY_H_

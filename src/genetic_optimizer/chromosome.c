@@ -9,8 +9,6 @@
 #include <stddef.h>
 #include <assert.h>
 
-#define MAKESPAN_UNCALCULATED -1
-
 int *index_count;
 int *machine_end_time;
 extern p_order_t target_order;
@@ -18,7 +16,7 @@ extern p_order_t target_order;
 void initialize_chromosome(p_chromosome_t chromosome, size_t size) {
     chromosome->size = size;
     chromosome->genes = (int *)calloc(chromosome->size, sizeof(int));
-	chromosome->indexes = (int *)calloc(chromosome->size, sizeof(int)); 
+    chromosome->indexes = (int *)calloc(chromosome->size, sizeof(int)); 
     chromosome->makespan = MAKESPAN_UNCALCULATED;
 }
 
@@ -32,12 +30,12 @@ void destroy_chromosome(p_chromosome_t chromosome) {
 }
 
 void calculate_indexes(p_chromosome_t chromosome) {
-    //TODO
+    //TODO: Implent this function!!
 }
 
 void decode(p_chromosome_t chromosome) {
     calculate_indexes(chromosome);
-    // TODO
+    //TODO: Implent this function!!
 }
 
 int makespan(p_chromosome_t chromosome) {
@@ -48,6 +46,7 @@ int makespan(p_chromosome_t chromosome) {
 }
 
 void mutate(p_chromosome_t chromosome) {
-    // TODO
+    //TODO: Everything
+    //FIXME: Holy S**t
     chromosome->makespan = MAKESPAN_UNCALCULATED;
 }

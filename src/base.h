@@ -9,8 +9,7 @@
 #ifndef _BASE_H_
 #define _BASE_H_
 
-#define IN                  /**< @brief 表示该函数参数为输入。 */
-#define OUT                 /**< @brief 表示该函数参数为输出。 */
+#include <stddef.h>
 
 /**
  * @brief 表示一项工序。

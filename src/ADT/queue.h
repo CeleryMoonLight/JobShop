@@ -125,45 +125,5 @@ p_queue_##type##_t new_queue_##type(const int capacity) {\
         free(pointer->data);\
         free(pointer);\
     }
-/**
- * @brief 返回指定队列是否为空。
- * 
- * @param pointer 指定队列。
- * @return true 队列为空。
- * @return false 队列不为空。
- */
-#define is_empty(pointer)\
-    pointer->vtable->is_empty(pointer)
-/**
- * @brief 返回指定队列的当前大小。
- * 
- * @param pointer 指定队列。
- * @return 当前队列大小。
- */
-#define size(pointer)\
-    pointer->vtable->size(pointer)
-/**
- * @brief 返回指定队列的队首元素。
- * 
- * @param pointer 指定队列。
- * @return 队首元素。
- */
-#define front(pointer)\
-    pointer->vtable->front(pointer)
-/**
- * @brief 指定队列队首出队一个元素。
- * 
- * @param pointer 指定队列。
- */
-#define pop(pointer)\
-    pointer->vtable->pop(pointer)
-/**
- * @brief 指定队列队尾入队一个元素。
- * 
- * @param pointer 指定队列。
- * @param element 要入队的元素。
- */
-#define push(pointer, element)\
-    pointer->vtable->push(pointer, element)
 
 #endif // !_QUEUE_H_

@@ -10,6 +10,8 @@
 
 #include "../base.h"
 
+#define MAKESPAN_UNCALCULATED -1
+
 /**
  * @brief 表示一个染色体。
  * 

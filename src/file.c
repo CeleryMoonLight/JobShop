@@ -13,8 +13,52 @@
 
 #define MAX_JOBS_SIZE 128
 #define BUFFER_SIZE 1024
-#define INPUT_STATE_NUM 0
-#define INPUT_STATE_COMMA 1
+
+/**
+ * @private
+ * @brief 将给定读入指针移至下一个数字处。
+ * 
+ * @param forward 给定读入指针。
+ * @return true 移动成功。
+ * @return false 移动失败，已经没有下一个数字。
+ */
+bool next_digit(char **forward);
+/**
+ * @private
+ * @brief 从给定流中读入订单信息。
+ * 
+ * @param input_order 要输入的订单。
+ * @param stream 给定输入流。
+ */
+void read(p_order_t input_order, FILE *stream);
+/**
+ * @private
+ * @brief 向给定流中输出订单规划信息。
+ * 
+ * @param output_order 要输出的订单。
+ * @param stream 给定输出流。
+ */
+void write(p_order_t output_order, FILE *stream);
+
+void read_from_file(p_order_t input_order, const char *path) {
+    FILE *fp = fopen(path, "r");
+    read(input_order, fp);
+    fclose(fp);
+}
+
+void read_from_console(p_order_t input_order) {
+    read(input_order, stdin);
+}
+
+void write_to_file(p_order_t output_order, const char *path) {
+    FILE *fp = fopen(path, "w");
+    write(output_order, fp);
+    fclose(fp);
+}
+
+void write_to_console(p_order_t output_order) {
+    write(output_order, stdout);
+}
 
 bool next_digit(char **forward) {
     while (**forward != '\0' && isdigit(**forward)) {
@@ -83,24 +127,6 @@ void read(p_order_t input_order, FILE *stream) {
     }
 }
 
-void read_from_console(p_order_t input_order) {
-    read(input_order, stdin);
-}
+void write(p_order_t output_order, FILE *stream) {
 
-void read_from_file(p_order_t input_order, const char *path) {
-    FILE *fp = fopen(path, "r");
-    read(input_order, fp);
-    fclose(fp);
-}
-
-void write() {
-
-}
-
-void write_to_file() {
-    write();
-}
-
-void write_to_console() {
-    write();
 }
