@@ -1,5 +1,5 @@
 /**
- * @brief Implementation of file.h
+ * @brief Implementation of file.h.
  * 
  * @file file.c
  * @author Celery Meng
@@ -31,26 +31,32 @@ bool next_digit(char **forward) {
     }
 }
 
-void read(order_t *input_order, FILE *stream) {
+void read(p_order_t input_order, FILE *stream) {
     static char buffer[BUFFER_SIZE];
     fscanf(
         stream,
-        "%d %d",
+        "%zu %zu",
         &(input_order->num_of_jobs),
         &(input_order->num_of_machines)
     );
-    input_order->operations = (operation_t **)
+    input_order->operations = (p_operation_t *)
         calloc(
             input_order->num_of_jobs,
-            sizeof(operation_t *)
+            sizeof(p_operation_t)
         );
-    for (int index = 0; index < input_order->num_of_jobs; index++) {
-        input_order->operations[index] = (operation_t *)
+    for (size_t index = 0; index < input_order->num_of_jobs; index++) {
+        input_order->operations[index] = (p_operation_t)
             calloc(
                 MAX_JOBS_SIZE,
                 sizeof(operation_t)
             );
     }
+    input_order->operations_of_jobs = (size_t *)
+        calloc(
+            input_order->num_of_jobs,
+            sizeof(size_t)
+        );
+
     char *forward = NULL;
     bool is_ended = false;
     for (int index_of_job = 0; index_of_job < input_order->num_of_jobs; index_of_job++) {
@@ -70,17 +76,31 @@ void read(order_t *input_order, FILE *stream) {
             }
             sscanf(forward, "%d", &((input_order->operations[index_of_job][index_of_operation]).machine));
             input_order->operations[index_of_job][index_of_operation].job = index_of_job;
+            input_order->operations_of_jobs[index_of_job]++;
+            input_order->num_of_operations++;
             index_of_operation++;
         }
     }
 }
 
-void read_from_console(order_t *input_order) {
+void read_from_console(p_order_t input_order) {
     read(input_order, stdin);
 }
 
-void read_from_file(order_t *input_order, const char *path) {
+void read_from_file(p_order_t input_order, const char *path) {
     FILE *fp = fopen(path, "r");
     read(input_order, fp);
     fclose(fp);
+}
+
+void write() {
+
+}
+
+void write_to_file() {
+    write();
+}
+
+void write_to_console() {
+    write();
 }

@@ -1,5 +1,5 @@
 /**
- * @brief Implementation of base.h
+ * @brief Implementation of base.h.
  * 
  * @file base.c
  * @author Celery Meng
@@ -7,15 +7,15 @@
  */
 #include "base.h"
 
-order_t *new_order() {
-    return (order_t*)malloc(sizeof(order_t));
+p_order_t new_order() {
+    return (p_order_t)malloc(sizeof(order_t));
 }
 
-void delete_order(order_t *to_be_deleted)
+void delete_order(p_order_t order)
 {
-    for (int i = 0; i < to_be_deleted->num_of_jobs; i++) {
-        free(to_be_deleted->operations[i]);
+    for (int i = 0; i < order->num_of_jobs; i++) {
+        free(order->operations[i]);
     }
-    free(to_be_deleted->operations);
-    free(to_be_deleted);
+    free(order->operations);
+    free(order);
 }

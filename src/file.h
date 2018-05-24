@@ -19,7 +19,7 @@
  * @author Celery Meng
  */
 void read_from_file(
-    OUT order_t *input_order, 
+    OUT p_order_t input_order, 
     IN const char *path
 );
 
@@ -30,7 +30,10 @@ void read_from_file(
  * @author Celery Meng
  */
 void read_from_console(
-    OUT order_t *input_order
+    OUT p_order_t input_order
 );
+
+void write_to_file();
+void write_to_console();
 
 #endif // !_FILE_H_

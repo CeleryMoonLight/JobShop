@@ -346,3 +346,5 @@ doc/*
 !doc/build.sh
 Sample-Test1
 test_data
+CMakeSettings.json
+thought.cpp
