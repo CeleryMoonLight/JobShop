@@ -11,6 +11,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <assert.h>
 
 /**
  * @brief 从给定类型生成对应的 array_t 类型。
@@ -139,6 +140,8 @@ p_array_##type##_t new_array_##type(const int capacity) {\
  */
 #define delete_array(pointer)\
     {\
+        assert(pointer != NULL);\
+        assert(pointer->data != NULL);\
         free(pointer->data);\
         free(pointer);\
     }

@@ -11,7 +11,7 @@
 #include "chromosome.h"
 #include "chromosome_pool.h"
 #include "../ADT/array.h"
-#include "../ADT/util.h"
+#include "../ADT/interface.h"
 
 define_array(p_chromosome_t);
 /**

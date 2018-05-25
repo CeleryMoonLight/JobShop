@@ -122,6 +122,8 @@ p_queue_##type##_t new_queue_##type(const int capacity) {\
  */
 #define delete_queue(pointer)\
     {\
+        assert(pointer != NULL);\
+        assert(pointer->data != NULL);\
         free(pointer->data);\
         free(pointer);\
     }

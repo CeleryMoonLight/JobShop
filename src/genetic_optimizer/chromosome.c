@@ -7,6 +7,7 @@
  */
 #include "chromosome.h"
 #include <stddef.h>
+#include <memory.h>
 #include <assert.h>
 
 int *index_count;
@@ -30,12 +31,32 @@ void destroy_chromosome(p_chromosome_t chromosome) {
 }
 
 void calculate_indexes(p_chromosome_t chromosome) {
-    //TODO: Implent this function!!
+    memset(index_count, 0, target_order->num_of_jobs * sizeof(int));
+
+    for (size_t index = 0; index < chromosome->size; index++) {
+        chromosome->indexes[index] = index_count[chromosome->genes[index]];
+        index_count[chromosome->genes[index]]++;
+    }
 }
 
 void decode(p_chromosome_t chromosome) {
     calculate_indexes(chromosome);
-    //TODO: Implent this function!!
+    memset(machine_end_time, 0, target_order->num_of_machines * sizeof(int));
+    chromosome->makespan = 0;
+    p_operation_t *ops = target_order->operations;
+    for (size_t i = 0; i < chromosome->size; i++) {
+        int g = chromosome->genes[i];
+        if (chromosome->indexes[i] != 0) {
+            ops[g][chromosome->indexes[i]].begin_time = max(machine_end_time[ops[g][chromosome->indexes[i]].machine], ops[g][chromosome->indexes[i] - 1].end_time);
+        } else {
+            ops[g][chromosome->indexes[i]].begin_time = machine_end_time[ops[g][chromosome->indexes[i]].machine];            
+        }
+        ops[g][chromosome->indexes[i]].end_time = ops[g][chromosome->indexes[i]].begin_time + ops[g][chromosome->indexes[i]].period;
+        machine_end_time[ops[g][chromosome->indexes[i]].machine] = ops[g][chromosome->indexes[i]].end_time;
+        if (ops[g][chromosome->indexes[i]].end_time > chromosome->makespan) {
+            chromosome->makespan = ops[g][chromosome->indexes[i]].end_time;
+        }
+    }
 }
 
 int makespan(p_chromosome_t chromosome) {

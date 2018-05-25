@@ -1,5 +1,12 @@
-#ifndef _UTIL_H_
-#define _UTIL_H_
+/**
+ * @brief 提供容器操作接口。
+ * 
+ * @file interface.h
+ * @author Jason Qiu
+ * @date 2018-05-25
+ */
+#ifndef _INTERFACE_H_
+#define _INTERFACE_H_
 
 /**
  * @brief 返回指定容器是否为空。
@@ -66,4 +73,4 @@
 #define resize(pointer, size)\
     pointer->vtable->resize(pointer, size)
 
-#endif // !_UTIL_H_
+#endif // !_INTERFACE_H_

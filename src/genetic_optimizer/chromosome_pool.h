@@ -10,7 +10,7 @@
 
 #include "chromosome.h"
 #include "../ADT/queue.h"
-#include "../ADT/util.h"
+#include "../ADT/interface.h"
 
 define_queue(p_chromosome_t);
 
