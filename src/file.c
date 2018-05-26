@@ -103,9 +103,14 @@ void read(p_order_t input_order, FILE *stream) {
 
     char *forward = NULL;
     bool is_ended = false;
+    buffer[0] = ' ';
     for (int index_of_job = 0; index_of_job < input_order->num_of_jobs; index_of_job++) {
-        fscanf(stream, "%*d");
-        fgets(buffer, BUFFER_SIZE, stream);
+        char line_head = '\0';
+        while (!isgraph(line_head)) {
+            line_head = fgetc(stream);
+        }
+        fgets(buffer + 2, BUFFER_SIZE - 2, stream);
+        *(buffer + 1) = line_head;
         forward = buffer;
         int index_of_operation = 0;
         while (true) {
@@ -113,13 +118,14 @@ void read(p_order_t input_order, FILE *stream) {
             if (is_ended) {
                 break;
             }
-            sscanf(forward, "%d", &((input_order->operations[index_of_job][index_of_operation]).period));
+            sscanf(forward, "%d", &((input_order->operations[index_of_job][index_of_operation]).machine));
             is_ended = next_digit(&forward);
             if (is_ended) {
                 break;
             }
-            sscanf(forward, "%d", &((input_order->operations[index_of_job][index_of_operation]).machine));
+            sscanf(forward, "%d", &((input_order->operations[index_of_job][index_of_operation]).period));
             input_order->operations[index_of_job][index_of_operation].job = index_of_job;
+            input_order->operations[index_of_job][index_of_operation].index = index_of_operation;
             input_order->operations_of_jobs[index_of_job]++;
             input_order->num_of_operations++;
             index_of_operation++;

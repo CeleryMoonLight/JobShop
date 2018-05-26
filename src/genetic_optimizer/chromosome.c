@@ -5,10 +5,10 @@
  * @author Jason Qiu, Celery Meng
  * @date 2018-05-03
  */
-#include "chromosome.h"
+#include "genetic_optimizer/chromosome.h"
 
-#include "../base.h"
-#include "../util.h"
+#include "base.h"
+#include "util.h"
 
 int *index_count;
 int *machine_end_time;
@@ -66,9 +66,8 @@ int makespan(p_chromosome_t chromosome) {
 }
 
 void mutate(p_chromosome_t chromosome) {
-    //TODO: random version
-    size_t i = 0;   // random things...
-    size_t j = 0;
-    swap(&chromosome->genes[i], &chromosome->genes[j]);
+    size_t i = (size_t)uniform_int_distribution(0, chromosome->size - 1);
+    size_t j = (size_t)uniform_int_distribution(0, chromosome->size - 1);
+    swap_int(&chromosome->genes[i], &chromosome->genes[j]);
     chromosome->makespan = MAKESPAN_UNCALCULATED;
 }

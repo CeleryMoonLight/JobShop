@@ -8,14 +8,23 @@
 #ifndef _UTIL_H_
 #define _UTIL_H_
 
+#include "base.h"
+
 /**
  * @public
- * @brief 交换两个元素。
+ * @brief Swap two integer.
  * 
- * @param a 第一个元素。
- * @param b 第二个元素。
+ * @param a First element.
+ * @param b Second element.
  */
-void swap(int *a, int *b);
+void swap_int(int *a, int *b);
+/**
+ * @brief Swap two size_t variables.
+ * 
+ * @param a First element.
+ * @param b Second element.
+ */
+void swap_size_t(size_t *a, size_t *b);
 /**
  * @public
  * @brief 利用当前系统时间初始化随机数引擎。

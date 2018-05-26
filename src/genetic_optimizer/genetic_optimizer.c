@@ -5,11 +5,13 @@
  * @author Jason Qiu, Celery Meng
  * @date 2018-05-17
  */
-#include "genetic_optimizer.h"
+#include "genetic_optimizer/genetic_optimizer.h"
 
-#include "../base.h"
-#include "chromosome_pool.h"
-#include "../ADT/ADT.h"
+#include "base.h"
+#include "genetic_optimizer/chromosome_pool.h"
+#include "ADT/ADT.h"
+#include "util.h"
+#include <stdio.h>
 
 define_array(p_chromosome_t);
 
@@ -19,61 +21,67 @@ int population_density = 0;
 double reproductive_rate = 0.;
 p_chromosome_t template_chromosome = NULL;
 p_array_t(p_chromosome_t) population = NULL;
+p_array_t(p_chromosome_t) children = NULL;
 bool *is_copyable = NULL;
+
 /**
  * @private
- * @brief 比较两个给定染色体的适应度。
+ * @brief Compares the makespans of two specified chromosomes.
  * 
- * @param a 给定染色体。
- * @param b 给定染色体。
- * @return int 比较结果。
+ * @param a Specified chromosome.
+ * @param b Specified chromosome.
+ * @return int Result.
  */
 int compare_chromosome_makespan(const void *a, const void *b);
 /**
  * @private
- * @brief 随机洗牌给定染色体的基因。
+ * @brief Shuffles the genes of the specified chromosome. 
  * 
- * @param chromosome 给定染色体。
+ * @param chromosome Specified chromosome.
  */
 void shuffle(p_chromosome_t chromosome);
 /**
  * @private
- * @brief 初始化种群。
+ * @brief Initializes the population.
  * 
  */
 void initialize_population();
 /**
  * @private
- * @brief 获得一个随机染色体。
+ * @brief Obtains a new chromosome, with genes shuffled randomly.
  * 
  */
 p_chromosome_t get_random_chromosome();
 /**
  * @private
- * @brief GOX 交叉算子。
+ * @brief GOX Crossing Operator.
  * 
- * @param father 父代染色体。
- * @param mother 母代染色体。
+ * @param father Father chromosome.
+ * @param mother Mother chromosome.
  */
 p_chromosome_t GOX(p_chromosome_t father, p_chromosome_t mother);
 
 
 
 int compare_chromosome_makespan(const void *a, const void *b) {
-    assert(((p_chromosome_t)a)->makespan != MAKESPAN_UNCALCULATED);
-    assert(((p_chromosome_t)b)->makespan != MAKESPAN_UNCALCULATED);
-    return ((p_chromosome_t)b)->makespan - ((p_chromosome_t)a)->makespan;
+    assert((*(p_chromosome_t *)a)->makespan != MAKESPAN_UNCALCULATED);
+    assert((*(p_chromosome_t *)b)->makespan != MAKESPAN_UNCALCULATED);
+    return -(*(p_chromosome_t *)b)->makespan + (*(p_chromosome_t *)a)->makespan;
 }
 
 void shuffle(p_chromosome_t chromosome) {
-    // TODO: Implement it
+    int j = 0;
+    for (size_t i = chromosome->size - 1; i != 0; i--) {
+        j = uniform_int_distribution(0, i);
+        swap_int(&(chromosome->genes[i]), &(chromosome->genes[j]));
+    }
     chromosome->makespan = MAKESPAN_UNCALCULATED;
 }
 
 void initialize_genetic_optimizer(int density, double rate) {
     population_density = density;
     reproductive_rate = rate;
-    is_copyable = (int *)calloc(target_order->num_of_operations, sizeof(int));
+    is_copyable = (bool *)calloc(target_order->num_of_operations, sizeof(bool));
     initialize_chromosome_pool((size_t)(2 * density * (1 + reproductive_rate)));
     // Initialize template chromosome
     template_chromosome = new_chromosome();
@@ -89,6 +97,7 @@ void initialize_genetic_optimizer(int density, double rate) {
 
 void destroy_genetic_optimizer() {
     delete_array(population);
+    delete_array(children);
     assert(is_copyable != NULL);
     free(is_copyable);
     is_copyable = NULL;
@@ -97,6 +106,7 @@ void destroy_genetic_optimizer() {
 
 void initialize_population() {
     population = new_array(p_chromosome_t, population_density * 2);
+    children = new_array(p_chromosome_t, (int)(population_density * reproductive_rate));
     for (int i = 0; i < population_density; i++) {
         push_back(population, get_random_chromosome());
     }
@@ -110,12 +120,14 @@ p_chromosome_t get_random_chromosome() {
 
 p_chromosome_t GOX(p_chromosome_t father, p_chromosome_t mother) {
     p_chromosome_t child = new_chromosome();
-    size_t i = 0;  //TODO: rand
-    size_t j = 0;  //TODO: rand
-    size_t k = 0;  //TODO: rand
+    size_t i = uniform_int_distribution(0, mother->size - 1);
+    size_t j = uniform_int_distribution(0, mother->size - 1);
+    size_t k = uniform_int_distribution(0, father->size);
     if (i > j) {
-        swap(i, j); //TODO: swap!!
+        swap_size_t(&i, &j);
     }
+    makespan(father);
+    makespan(mother);
     memset(is_copyable, true, father->size * sizeof(bool));
     for (size_t father_index = 0; father_index < father->size; father_index++) {
         for (size_t mother_index = i; mother_index <= j; mother_index++) {
@@ -143,18 +155,40 @@ p_chromosome_t GOX(p_chromosome_t father, p_chromosome_t mother) {
             current_gene++;
         }
     }
-    mutate(child);  // TODO: 
+    mutate(child);
+ //   for (int i = 0; i < child->size; i++) {
+ //       printf("%d", child->genes[i]);
+ //   }
+ //   putchar('\n');
+
     return child;
 }
 
 void evolve() {
-    GOX(NULL, NULL);
+    resize(children, 0);
+    int indexA, indexB;
+    for (int i = 0; i < population_density * reproductive_rate; i++) {
+        indexA = abs(lround(normal_distribution(0, population_density / 2)));
+        indexB = abs(lround(normal_distribution(0, population_density / 2)));
+        if (indexA >= population_density) indexA = population_density - 1;
+        if (indexB >= population_density) indexB = population_density - 1;
+        push_back(children, GOX(population->data[indexA], population->data[indexB]));
+    }
+    for (size_t i = size(population) - size(children); i < size(population); i++) {
+        delete_chromosome(population->data[i]);
+    }
+    resize(population, size(population) - size(children));
+    memcpy(end(population), begin(children), size(children) * sizeof(p_chromosome_t));
+    resize(population, population_density);
+    for (size_t i = 0; i < size(population); i++) {
+        makespan(population->data[i]);
+    }
     qsort(begin(population), size(population), sizeof(front(population)), compare_chromosome_makespan);
-    delete_chromosome(NULL);
+    decode(front(population));
+    target_order->num_of_jobs;
+    target_order->makespan = front(population)->makespan;
 }
 
 void genetic_optimize() {
     evolve();
 }
-
-

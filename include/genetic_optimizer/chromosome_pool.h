@@ -1,5 +1,5 @@
 /**
- * @brief 染色体对象池。
+ * @brief Chromosome object pool.
  * 
  * @file chromosome_pool.h
  * @author Jason Qiu
@@ -12,35 +12,35 @@
 
 /**
  * @public
- * @brief 初始化对象池。
+ * @brief Initializes the object pool.
  * 
- * @param capacity 对象池大小。
+ * @param capacity Capacity of the object pool.
  */
 void initialize_chromosome_pool(size_t capacity);
 /**
  * @public
- * @brief 销毁对象池。
+ * @brief Destroys the object pool.
  * 
  */
 void destroy_chromosome_pool();
 /**
  * @public
- * @brief 从对象池获得染色体对象并返回。
+ * @brief Gets a new object from the pool.
  * 
  */
 p_chromosome_t new_chromosome();
 /**
  * @public
- * @brief 拷贝构造染色体对象并返回。
+ * @brief Gets a new chromosome, copies the specified chromosome to the new chromosome.
  * 
- * @param chromosome 给定染色体。
+ * @param chromosome Specified chromosome.
  */
 p_chromosome_t new_chromosome_copy_from(p_chromosome_t chromosome);
 /**
  * @public
- * @brief 回收给定染色体。
+ * @brief Returns the specified chromosome to the pool.
  * 
- * @param chromosome 给定染色体。
+ * @param chromosome Specified chromosome.
  */
 void delete_chromosome(p_chromosome_t chromosome);
 

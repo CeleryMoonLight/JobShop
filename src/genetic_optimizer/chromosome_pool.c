@@ -5,10 +5,10 @@
  * @author Jason Qiu, Celery Meng
  * @date 2018-05-18
  */
-#include "chromosome_pool.h"
+#include "genetic_optimizer/chromosome_pool.h"
 
-#include "../base.h"
-#include "../ADT/ADT.h"
+#include "base.h"
+#include "ADT/ADT.h"
 
 define_queue(p_chromosome_t);
 
@@ -59,8 +59,8 @@ p_chromosome_t new_chromosome() {
 
 p_chromosome_t new_chromosome_copy_from(p_chromosome_t chromosome) {
     p_chromosome_t res = new_chromosome();
-    memcpy(res->genes, chromosome->genes, chromosome->size);
-    memcpy(res->indexes, chromosome->indexes, chromosome->size);
+    memcpy(res->genes, chromosome->genes, chromosome->size * sizeof(int));
+    memcpy(res->indexes, chromosome->indexes, chromosome->size * sizeof(int));
     res->makespan = chromosome->makespan;
     return res;
 }

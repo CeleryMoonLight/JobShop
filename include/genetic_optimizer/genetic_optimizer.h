@@ -1,5 +1,5 @@
 /**
- * @brief 遗传算法优化器。
+ * @brief Genetic optimizer.
  * 
  * @file genetic_optimizer.h
  * @author Jason Qiu
@@ -10,21 +10,21 @@
 
 /**
  * @public
- * @brief 初始化遗传算法优化器。
+ * @brief Initializes the genetic optimizer. 
  * 
- * @param density 种群密度。
- * @param rate 种群繁殖率。
+ * @param density Population Density.
+ * @param rate Reproductive rate of the population. 
  */
 void initialize_genetic_optimizer(int density, double rate);
 /**
  * @public
- * @brief 销毁遗传算法优化器。
+ * @brief Destroys the genetic optimizer. 
  * 
  */
 void destroy_genetic_optimizer();
 /**
  * @public
- * @brief 利用遗传算法优化器迭代一次。
+ * @brief Optimizes the order by one interation using the genetic optimizer. 
  * 
  */
 void genetic_optimize();

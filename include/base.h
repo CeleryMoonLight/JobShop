@@ -17,6 +17,7 @@
 #include <assert.h>
 #include <time.h>
 #include <ctype.h>
+#include <math.h>
 
 
 /**
@@ -27,6 +28,7 @@ typedef struct {
     int job;                /**< @brief 表示该工序所属的产品。 */
     int period;             /**< @brief 表示该工序所需的时间。 */
     int machine;            /**< @brief 表示该工序指定的机器。 */
+    int index;              
     int begin_time;         /**< @brief 表示该工序的开始时间。 */
     int end_time;           /**< @brief 表示该工序的结束时间。 */
 } operation_t;
@@ -47,6 +49,7 @@ typedef struct {
     size_t num_of_operations;      /**< @brief 表示所有产品共有多少个工序。 */
     size_t num_of_jobs;            /**< @brief 表示共有多少个产品。 */
     size_t num_of_machines;        /**< @brief 表示共有多少台机器。 */
+    int makespan;                  /**< */
 } order_t;
 
 /**
