@@ -10,6 +10,14 @@
 #define _BASE_H_
 
 #include <stddef.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include <memory.h>
+#include <limits.h>
+#include <assert.h>
+#include <time.h>
+#include <ctype.h>
+
 
 /**
  * @brief 表示一项工序。
@@ -48,6 +56,7 @@ typedef struct {
 typedef order_t *p_order_t;
 
 /**
+ * @public
  * @brief 创建 order_t 对象。
  * 
  * @return p_order_t 指向创建的 order_t 对象的指针。
@@ -56,6 +65,7 @@ typedef order_t *p_order_t;
 p_order_t new_order();
 
 /**
+ * @public
  * @brief 销毁 order_t 对象。
  * 
  * @param order 要被销毁的 order_t 对象。

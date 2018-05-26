@@ -8,10 +8,7 @@
 #ifndef _ARRAY_H_
 #define _ARRAY_H_
 
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdlib.h>
-#include <assert.h>
+#include "../base.h"
 
 /**
  * @brief 从给定类型生成对应的 array_t 类型。

@@ -6,8 +6,8 @@
  * @date 2018-05-02
  */
 
-#include <stdio.h>
 #include "file.h"
+#include "util.h"
 #include "optimizer.h"
 
 p_order_t target_order = NULL;
@@ -20,12 +20,11 @@ p_order_t target_order = NULL;
 
 int main(int argc, char *argv[]) {
     target_order = new_order();
-    read_from_console(target_order);
-    read_from_file(target_order, "./input.txt");    
-    initialize_genetic_optimizer(0, 0);
+    read_from_file(target_order, "./input.txt");
+    initialize_random_engine();
+    initialize_genetic_optimizer(300, 0.5);
     genetic_optimize();
-    write_to_console();
-    write_to_file();
+    write_to_console(target_order);
     destroy_genetic_optimizer();
     delete_order(target_order);
     return 0;

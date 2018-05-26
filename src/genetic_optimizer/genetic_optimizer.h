@@ -8,13 +8,8 @@
 #ifndef _GENETIC_OPTIMIZER_H_
 #define _GENETIC_OPTIMIZER_H_
 
-#include "chromosome.h"
-#include "chromosome_pool.h"
-#include "../ADT/array.h"
-#include "../ADT/interface.h"
-
-define_array(p_chromosome_t);
 /**
+ * @public
  * @brief 初始化遗传算法优化器。
  * 
  * @param density 种群密度。
@@ -22,11 +17,13 @@ define_array(p_chromosome_t);
  */
 void initialize_genetic_optimizer(int density, double rate);
 /**
+ * @public
  * @brief 销毁遗传算法优化器。
  * 
  */
 void destroy_genetic_optimizer();
 /**
+ * @public
  * @brief 利用遗传算法优化器迭代一次。
  * 
  */

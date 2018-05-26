@@ -6,11 +6,11 @@
  * @date 2018-05-18
  */
 #include "chromosome_pool.h"
-#include <stddef.h>
-#include <stdlib.h>
-#include <memory.h>
-#include <assert.h>
+
 #include "../base.h"
+#include "../ADT/ADT.h"
+
+define_queue(p_chromosome_t);
 
 extern p_order_t target_order;
 

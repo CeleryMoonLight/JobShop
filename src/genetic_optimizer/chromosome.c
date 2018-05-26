@@ -6,9 +6,9 @@
  * @date 2018-05-03
  */
 #include "chromosome.h"
-#include <stddef.h>
-#include <memory.h>
-#include <assert.h>
+
+#include "../base.h"
+#include "../util.h"
 
 int *index_count;
 int *machine_end_time;
@@ -32,7 +32,6 @@ void destroy_chromosome(p_chromosome_t chromosome) {
 
 void calculate_indexes(p_chromosome_t chromosome) {
     memset(index_count, 0, target_order->num_of_jobs * sizeof(int));
-
     for (size_t index = 0; index < chromosome->size; index++) {
         chromosome->indexes[index] = index_count[chromosome->genes[index]];
         index_count[chromosome->genes[index]]++;
@@ -67,7 +66,9 @@ int makespan(p_chromosome_t chromosome) {
 }
 
 void mutate(p_chromosome_t chromosome) {
-    //TODO: Everything
-    //FIXME: Holy S**t
+    //TODO: random version
+    size_t i = 0;   // random things...
+    size_t j = 0;
+    swap(&chromosome->genes[i], &chromosome->genes[j]);
     chromosome->makespan = MAKESPAN_UNCALCULATED;
 }

@@ -12,6 +12,7 @@
 #include "base.h"
 
 /**
+ * @public
  * @brief 从文件中读入订单信息。
  * 
  * @param input_order 读入的订单信息所要存储的订单。
@@ -20,6 +21,7 @@
 void read_from_file(p_order_t input_order, const char *path);
 
 /**
+ * @public
  * @brief 从控制台读入订单信息。
  * 
  * @param input_order 读入的订单信息所要存储的订单。
@@ -27,6 +29,7 @@ void read_from_file(p_order_t input_order, const char *path);
 void read_from_console(p_order_t input_order);
 
 /**
+ * @public
  * @brief 向文件中输出给定订单的工序规划。
  * 
  * @param output_order 给定订单。
@@ -36,6 +39,7 @@ void read_from_console(p_order_t input_order);
 void write_to_file(p_order_t output_order, const char *path);
 
 /**
+ * @public
  * @brief 向控制台中输出给定订单的工序规划。
  * 
  * @param output_order 给定订单。

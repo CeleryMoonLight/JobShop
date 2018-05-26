@@ -30,30 +30,35 @@ typedef struct {
 typedef chromosome_t *p_chromosome_t;
 
 /**
+ * @public
  * @brief 初始化给定染色体。
  * 
  * @param chromosome 给定染色体。
  */
 void initialize_chromosome(p_chromosome_t chromosome, size_t size);
 /**
+ * @public
  * @brief 销毁给定染色体。
  * 
  * @param chromosome 给定染色体。
  */
 void destroy_chromosome(p_chromosome_t chromosome);
 /**
+ * @public
  * @brief 计算给定染色体的工序序号。
  * 
  * @param chromosome 给定染色体。
  */
 void calculate_indexes(p_chromosome_t chromosome);
 /**
+ * @public
  * @brief 解码给定染色体。
  * 
  * @param chromosome 给定染色体。
  */
 void decode(p_chromosome_t chromosome);
 /**
+ * @public
  * @brief 返回给定染色体的总完工时间。
  * 
  * @param chromosome 给定染色体。
@@ -61,6 +66,7 @@ void decode(p_chromosome_t chromosome);
  */
 int makespan(p_chromosome_t chromosome);
 /**
+ * @public
  * @brief 变异给定染色体。
  * 
  * @param chromosome 给定染色体。

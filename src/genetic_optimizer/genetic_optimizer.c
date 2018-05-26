@@ -9,10 +9,9 @@
 
 #include "../base.h"
 #include "chromosome_pool.h"
+#include "../ADT/ADT.h"
 
-#include <assert.h>
-#include <memory.h>
-#include <stdbool.h>
+define_array(p_chromosome_t);
 
 extern p_order_t target_order;
 
@@ -76,6 +75,15 @@ void initialize_genetic_optimizer(int density, double rate) {
     reproductive_rate = rate;
     is_copyable = (int *)calloc(target_order->num_of_operations, sizeof(int));
     initialize_chromosome_pool((size_t)(2 * density * (1 + reproductive_rate)));
+    // Initialize template chromosome
+    template_chromosome = new_chromosome();
+    int *current_gene = template_chromosome->genes;
+    for (size_t job_index = 0; job_index < target_order->num_of_jobs; job_index++) {
+        for (size_t count = 0; count < target_order->operations_of_jobs[job_index]; count++) {
+            *current_gene = (int)job_index;
+            current_gene++;
+        }
+    }
     initialize_population();
 }
 
@@ -89,8 +97,6 @@ void destroy_genetic_optimizer() {
 
 void initialize_population() {
     population = new_array(p_chromosome_t, population_density * 2);
-    template_chromosome = new_chromosome();
-    // TODO: Initialize template_chromosome
     for (int i = 0; i < population_density; i++) {
         push_back(population, get_random_chromosome());
     }

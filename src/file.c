@@ -5,11 +5,11 @@
  * @author Celery Meng
  * @date 2018-05-03
  */
-
 #include "file.h"
+
 #include <stdio.h>
-#include <stdbool.h>
-#include <ctype.h>
+
+#include "base.h"
 
 #define MAX_JOBS_SIZE 128
 #define BUFFER_SIZE 1024

@@ -8,9 +8,7 @@
 #ifndef _QUEUE_H_
 #define _QUEUE_H_
 
-#include <stdbool.h>
-#include <stddef.h>
-#include <stdlib.h>
+#include "../base.h"
 
 /**
  * @brief 从给定类型生成对应的 queue_t 类型。
