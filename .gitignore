@@ -344,3 +344,7 @@ doc/*
 !doc/Doxyfile
 !doc/build.bat
 !doc/build.sh
+Sample-Test1
+test_data
+CMakeSettings.json
+thought.cpp

@@ -1,25 +1,33 @@
 /**
- * @brief 定义控制台程序入口点。
+ * @brief Defines the entry point for the console application.
  * 
  * @file main.c
  * @author Jason Qiu
  * @date 2018-05-02
  */
 
-#include <stdio.h>
 #include "file.h"
+#include "util.h"
+#include "optimizer.h"
+
+p_order_t target_order = NULL;
 
 /**
- * @brief 定义控制台程序入口点。
+ * @brief Defines the entry point for the console application.
  * 
- * @return int 程序运行无错误返回 0，否则返回非 0 值。
  */
-int main() {
-    order_t *test_order = new_order();
-//    read_from_console(test_order);
-	char path[30];
-	gets(path);
-    read_from_file(test_order,path);
-    delete_order(test_order);
+
+int main(int argc, char *argv[]) {
+    target_order = new_order();
+    read_from_console(target_order);
+    clock_t start_time = clock();
+    initialize_random_engine();
+    initialize_genetic_optimizer(5, 0.2);
+    genetic_optimize(4000000);
+    write_to_console(target_order);
+    printf("Time Used: %.3lfs\n", (clock() - start_time) / 1000.0);
+    printf("End Time: %d\n", target_order->makespan);
+    destroy_genetic_optimizer();
+    delete_order(target_order);
     return 0;
 }
