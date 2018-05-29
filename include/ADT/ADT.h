@@ -12,4 +12,4 @@
 #include "queue.h"
 #include "interface.h"
 
-#endif
+#endif // !_ADT_H_

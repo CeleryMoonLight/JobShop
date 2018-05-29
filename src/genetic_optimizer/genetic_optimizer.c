@@ -11,7 +11,6 @@
 #include "genetic_optimizer/chromosome_pool.h"
 #include "ADT/ADT.h"
 #include "util.h"
-#include <stdio.h>
 
 define_array(p_chromosome_t);
 
@@ -210,7 +209,7 @@ void genetic_optimize(int epoch) {
                 shuffle(*i);
             }
         }
-#ifndef _DEBUG
+#ifdef _DEBUG
         if (count % 10000 == 0) {
             printf("%d\n", target_order->makespan);
         }

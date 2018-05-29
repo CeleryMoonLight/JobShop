@@ -18,7 +18,7 @@
 #include <time.h>
 #include <ctype.h>
 #include <math.h>
-
+#include <stdio.h>
 
 /**
  * @brief Represents an operation of a job. 

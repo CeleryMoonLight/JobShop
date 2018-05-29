@@ -44,4 +44,4 @@ p_chromosome_t new_chromosome_copy_from(p_chromosome_t chromosome);
  */
 void delete_chromosome(p_chromosome_t chromosome);
 
-#endif // !_CHROMOSOME_H_
+#endif // !_CHROMOSOME_POOL_H_

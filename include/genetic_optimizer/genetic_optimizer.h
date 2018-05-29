@@ -29,4 +29,4 @@ void destroy_genetic_optimizer();
  */
 void genetic_optimize(int epoch);
 
-#endif
+#endif // !_GENETIC_OPTIMIZER_H_

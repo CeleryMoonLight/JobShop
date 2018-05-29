@@ -10,4 +10,4 @@
 
 #include "genetic_optimizer/genetic_optimizer.h"
 
-#endif
+#endif // !_OPTIMIZER_H_

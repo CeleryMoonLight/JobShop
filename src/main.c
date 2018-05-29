@@ -9,7 +9,6 @@
 #include "file.h"
 #include "util.h"
 #include "optimizer.h"
-#include <stdio.h>
 
 p_order_t target_order = NULL;
 
@@ -28,7 +27,7 @@ int main(int argc, char *argv[]) {
     write_to_console(target_order);
     printf("Time Used: %.3lfs\n", (clock() - start_time) / 1000.0);
     printf("End Time: %d\n", target_order->makespan);
- //   destroy_genetic_optimizer();
- //   delete_order(target_order);
+    destroy_genetic_optimizer();
+    delete_order(target_order);
     return 0;
 }
