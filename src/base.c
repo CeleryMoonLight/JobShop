@@ -2,7 +2,7 @@
  * @brief Implementation of base.h.
  * 
  * @file base.c
- * @author Celery Meng
+ * @author Celery Meng, Jason Qiu
  * @date 2018-05-03
  */
 #include "base.h"

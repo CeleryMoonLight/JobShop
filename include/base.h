@@ -1,5 +1,5 @@
 /**
- * @brief 定义基本数据结构类型与操作。
+ * @brief Defines the basic data structures and functions.
  * 
  * @file base.h
  * @author Jason Qiu
@@ -21,58 +21,57 @@
 
 
 /**
- * @brief 表示一项工序。
+ * @brief Represents an operation of a job. 
  * 
  */
 typedef struct {
-    int job;                /**< @brief 表示该工序所属的产品。 */
-    int period;             /**< @brief 表示该工序所需的时间。 */
-    int machine;            /**< @brief 表示该工序指定的机器。 */
-    int index;              
-    int begin_time;         /**< @brief 表示该工序的开始时间。 */
-    int end_time;           /**< @brief 表示该工序的结束时间。 */
+    int job;                /**< @brief The job to which this operation belongs. */
+    int period;             /**< @brief How long will this operation be processed. */
+    int machine;            /**< @brief The machine on which this operation will be processed. */
+    int index;              /**< @brief The index of this operation. */
+    int begin_time;         /**< @brief Scheduled start time of this operation. */
+    int end_time;           /**< @brief Scheduled end time of this operation. */
 } operation_t;
 
 /**
- * @brief operation_t 指针。
+ * @brief Pointer to operation_t.
  * 
  */
 typedef operation_t *p_operation_t;
 
 /**
- * @brief 表示订单。
- * @note operations 在读入数据时初始化，在 order_t 销毁时销毁。
+ * @brief Represents an order.
+ * @note operations are initialized while reading the input data, 
+ * destroyed when order_t is destroyed.
  */
 typedef struct {
-    p_operation_t *operations;     /**< @brief 储存所有 operation_t 的指针数组。 */
-    size_t *operations_of_jobs;    /**< @brief 表示单个指定产品的工序数。 */
-    size_t num_of_operations;      /**< @brief 表示所有产品共有多少个工序。 */
-    size_t num_of_jobs;            /**< @brief 表示共有多少个产品。 */
-    size_t num_of_machines;        /**< @brief 表示共有多少台机器。 */
-    int makespan;                  /**< */
+    p_operation_t *operations;     /**< @brief Stores all operations. */
+    size_t *operations_of_jobs;    /**< @brief The number of operations of a specified job. */
+    size_t num_of_operations;      /**< @brief The number of all operations. */
+    size_t num_of_jobs;            /**< @brief The number of jobs. */
+    size_t num_of_machines;        /**< @brief The number of machines. */
+    int makespan;                  /**< @brief Final makespan of the scheduling result. */
 } order_t;
 
 /**
- * @brief order_t 指针。
+ * @brief Pointer to order_t.
  * 
  */
 typedef order_t *p_order_t;
 
 /**
  * @public
- * @brief 创建 order_t 对象。
+ * @brief Creates an object of order_t.
  * 
- * @return p_order_t 指向创建的 order_t 对象的指针。
- * @author Celery Meng
+ * @return p_order_t Pointer to the new order_t object. 
  */
 p_order_t new_order();
 
 /**
  * @public
- * @brief 销毁 order_t 对象。
+ * @brief Destroys an order_t object.
  * 
- * @param order 要被销毁的 order_t 对象。
- * @author Celery Meng
+ * @param order order that to be destroyed.
  */
 void delete_order(p_order_t order);
 

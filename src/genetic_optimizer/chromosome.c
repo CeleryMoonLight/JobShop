@@ -2,7 +2,7 @@
  * @brief Implementation of chromosome.h.
  * 
  * @file chromosome.c
- * @author Jason Qiu, Celery Meng
+ * @author Celery Meng, Jason Qiu
  * @date 2018-05-03
  */
 #include "genetic_optimizer/chromosome.h"

@@ -1,5 +1,5 @@
 /**
- * @brief 定义控制台程序入口点。
+ * @brief Defines the entry point for the console application.
  * 
  * @file main.c
  * @author Jason Qiu
@@ -14,24 +14,21 @@
 p_order_t target_order = NULL;
 
 /**
- * @brief 定义控制台程序入口点。
+ * @brief Defines the entry point for the console application.
  * 
- * @return int 程序运行无错误返回 0，否则返回非 0 值。
  */
 
 int main(int argc, char *argv[]) {
     target_order = new_order();
     read_from_console(target_order);
+    clock_t start_time = clock();
     initialize_random_engine();
-    initialize_genetic_optimizer(300, 0.5);
-    int n = 10000;
-    while (n--) {
-        genetic_optimize();
-        if (n % 100 == 0)
-            printf("%d\n", target_order->makespan);
-    }
+    initialize_genetic_optimizer(5, 0.2);
+    genetic_optimize(4000000);
     write_to_console(target_order);
-    destroy_genetic_optimizer();
-    delete_order(target_order);
+    printf("Time Used: %.3lfs\n", (clock() - start_time) / 1000.0);
+    printf("End Time: %d\n", target_order->makespan);
+ //   destroy_genetic_optimizer();
+ //   delete_order(target_order);
     return 0;
 }

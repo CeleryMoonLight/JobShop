@@ -1,5 +1,5 @@
 /**
- * @brief 提供容器操作接口。
+ * @brief Interfaces of the containers.
  * 
  * @file interface.h
  * @author Jason Qiu
@@ -9,68 +9,67 @@
 #define _INTERFACE_H_
 
 /**
- * @brief 返回指定容器是否为空。
+ * @brief Returns whether the specified container is empty.
  * 
- * @param pointer 指定容器。
- * @return true 容器为空。
- * @return false 容器不为空。
+ * @param container Specified container.
+ * @return true The container is empty.
+ * @return false The container is not empty.
  */
-#define is_empty(pointer)\
-    pointer->vtable->is_empty(pointer)
+#define is_empty(container)\
+    container->vtable->is_empty(container)
 /**
- * @brief 返回指定容器的当前大小。
+ * @brief Returns the size of the specified container.
  * 
- * @param pointer 指定容器。
- * @return 当前容器大小。
+ * @param container Specified container.
+ * @return Size of the pecified container.
  */
-#define size(pointer)\
-    pointer->vtable->size(pointer)
+#define size(container)\
+    container->vtable->size(container)
 /**
- * @brief 返回指定容器的首元素。
+ * @brief Returns the first element of the pecified container.
  * 
- * @param pointer 指定容器。
- * @return 首元素。
+ * @param container Specified container.
+ * @return First element.
  */
-#define front(pointer)\
-    pointer->vtable->front(pointer)
+#define front(container)\
+    container->vtable->front(container)
 /**
- * @brief 返回指定容器的尾元素。
+ * @brief Returns the last element of the pecified container.
  * 
- * @param pointer 指定容器。
- * @return 尾元素。
+ * @param container Specified container.
+ * @return Last element.
  */
-#define back(pointer)\
-    pointer->vtable->back(pointer)
-/**
- * @brief 指定容器队首出队一个元素。
- * 
- * @param pointer 指定容器。
+#define back(container)\
+    container->vtable->back(container)
+
+ /**
+ * @brief Returns the begin iterator of the spceified container.
+ *
+ * @param container Specified container.
  */
-
-#define begin(pointer)\
-    pointer->vtable->begin(pointer)
-
-#define end(pointer)\
-    pointer->vtable->end(pointer)  
-    
-#define pop(pointer)\
-    pointer->vtable->pop(pointer)
-/**
- * @brief 指定容器队尾入队一个元素。
- * 
- * @param pointer 指定容器。
- * @param element 要入队的元素。
+#define begin(container)\
+    container->vtable->begin(container)
+ /**
+ * @brief Returns the end iterator of the spceified container.
+ *
+ * @param container Specified container.
  */
-#define push(pointer, element)\
-    pointer->vtable->push(pointer, element)
+#define end(container)\
+    container->vtable->end(container)  
 
-#define pop_back(pointer)\
-    pointer->vtable->pop_back(pointer)
+#define pop(container)\
+    container->vtable->pop(container)
 
-#define push_back(pointer, element)\
-    pointer->vtable->push_back(pointer, element)
+#define push(container, element)\
+    container->vtable->push(container, element)
 
-#define resize(pointer, size)\
-    pointer->vtable->resize(pointer, size)
+#define pop_back(container)\
+    container->vtable->pop_back(container)
+
+#define push_back(container, element)\
+    container->vtable->push_back(container, element)
+
+#define resize(container, size)\
+    container->vtable->resize(container, size)
 
 #endif // !_INTERFACE_H_

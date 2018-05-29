@@ -2,7 +2,7 @@
  * @brief Implementation of file.h.
  * 
  * @file file.c
- * @author Celery Meng
+ * @author Celery Meng, Jason Qiu
  * @date 2018-05-03
  */
 #include "file.h"
@@ -10,33 +10,36 @@
 #include <stdio.h>
 
 #include "base.h"
+#include "ADT/ADT.h"
 
 #define MAX_JOBS_SIZE 128
 #define BUFFER_SIZE 1024
 
+define_array(operation_t);
+
 /**
  * @private
- * @brief 将给定读入指针移至下一个数字处。
+ * @brief Movse the input pointer to the next number.
  * 
- * @param forward 给定读入指针。
- * @return true 移动成功。
- * @return false 移动失败，已经没有下一个数字。
+ * @param forward Input pointer.
+ * @return true Moved successfully.
+ * @return false Moved failed because there is no next number.
  */
 bool next_digit(char **forward);
 /**
  * @private
- * @brief 从给定流中读入订单信息。
+ * @brief Reads the order information from the spceified stream.
  * 
- * @param input_order 要输入的订单。
- * @param stream 给定输入流。
+ * @param input_order Order.
+ * @param stream Spceified input stream.
  */
 void read(p_order_t input_order, FILE *stream);
 /**
  * @private
- * @brief 向给定流中输出订单规划信息。
+ * @brief Writes the schedule to the spceified stream.
  * 
- * @param output_order 要输出的订单。
- * @param stream 给定输出流。
+ * @param output_order Order.
+ * @param stream Spceified output stream.
  */
 void write(p_order_t output_order, FILE *stream);
 
@@ -104,7 +107,7 @@ void read(p_order_t input_order, FILE *stream) {
     char *forward = NULL;
     bool is_ended = false;
     buffer[0] = ' ';
-    for (int index_of_job = 0; index_of_job < input_order->num_of_jobs; index_of_job++) {
+    for (size_t index_of_job = 0; index_of_job < input_order->num_of_jobs; index_of_job++) {
         char line_head = '\0';
         while (!isgraph(line_head)) {
             line_head = fgetc(stream);
@@ -133,6 +136,31 @@ void read(p_order_t input_order, FILE *stream) {
     }
 }
 
-void write(p_order_t output_order, FILE *stream) {
+int compare_begin_time(const void *a, const void *b) {
+    return ((p_operation_t)a)->begin_time - ((p_operation_t)b)->begin_time;
+}
 
+void write(p_order_t output_order, FILE *stream) {
+    p_array_t(operation_t) *schedule_output = (p_array_t(operation_t) *)calloc(output_order->num_of_machines, sizeof(p_array_t(operation_t)));
+    for (size_t i = 0; i < output_order->num_of_machines; i++) {
+        schedule_output[i] = new_array(operation_t, output_order->num_of_jobs);
+    }
+    for (size_t i = 0; i < output_order->num_of_jobs; i++) {
+        for (size_t j = 0; j < output_order->operations_of_jobs[i]; j++) {
+            int machine = output_order->operations[i][j].machine;
+            push_back(schedule_output[machine], output_order->operations[i][j]);
+        }
+    }
+    for (size_t i = 0; i < output_order->num_of_machines; i++) {
+        qsort(begin(schedule_output[i]), size(schedule_output[i]), sizeof(front(schedule_output[i])), compare_begin_time);
+    }
+    for (size_t i = 0; i < output_order->num_of_machines; i++) {
+        fprintf(stream, "M%d", i);
+        for (p_operation_t op = begin(schedule_output[i]); op != end(schedule_output[i]); op++) {
+            fprintf(stream, " (%d, %d-%d, %d)", op->begin_time, op->job, op->index, op->end_time);
+        }
+        fputc('\n', stream);
+        delete_array(schedule_output[i]);
+    }
+    free(schedule_output);
 }

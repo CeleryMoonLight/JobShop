@@ -1,5 +1,5 @@
 /**
- * @brief 实用函数。
+ * @brief Utility functions.
  * 
  * @file util.h
  * @author Jason Qiu
@@ -12,14 +12,14 @@
 
 /**
  * @public
- * @brief Swap two integer.
+ * @brief Swaps two integers.
  * 
  * @param a First element.
  * @param b Second element.
  */
 void swap_int(int *a, int *b);
 /**
- * @brief Swap two size_t variables.
+ * @brief Swaps two size_t variables.
  * 
  * @param a First element.
  * @param b Second element.
@@ -27,35 +27,35 @@ void swap_int(int *a, int *b);
 void swap_size_t(size_t *a, size_t *b);
 /**
  * @public
- * @brief 利用当前系统时间初始化随机数引擎。
+ * @brief Initializes the random engine using the system time.
  * 
  */
 void initialize_random_engine();
 /**
  * @public
- * @brief 利用给定种子初始化随机数引擎。
+ * @brief Initializes the random engine using the given seed.
  * 
- * @param seed 给定种子。
+ * @param seed Given seed.
  */
 void initialize_random_engine_with_seed(unsigned int seed);
 
 /**
  * @public
- * @brief 产生均匀分布整型随机数。
+ * @brief Generates random integers of uniform distribution.
  * 
- * @param lower_bound 下界。
- * @param upper_bound 上界。
- * @return int 均匀分布随机数。
+ * @param lower_bound Lower bound.
+ * @param upper_bound Upper bound.
+ * @return int Random integer of uniform distribution.
  */
 int uniform_int_distribution(int lower_bound, int upper_bound);
 
 /**
  * @public
- * @brief 产生正态分布浮点型随机数。
+ * @brief Generates random doubles of normal distribution.
  * 
- * @param mean 正态分布的参数 μ（均值）。
- * @param stddev 正态分布的参数 σ（标准差）。
- * @return double 正态分布随机数。
+ * @param mean Mean (μ).
+ * @param stddev Standard Deviation (σ).
+ * @return double Random double of uniform distribution.
  */
 double normal_distribution(double mean, double stddev);
 

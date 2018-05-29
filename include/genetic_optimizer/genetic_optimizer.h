@@ -27,6 +27,6 @@ void destroy_genetic_optimizer();
  * @brief Optimizes the order by one interation using the genetic optimizer. 
  * 
  */
-void genetic_optimize();
+void genetic_optimize(int epoch);
 
 #endif

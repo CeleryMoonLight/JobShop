@@ -2,7 +2,7 @@
  * @brief Implementation of genetic_optimizer.h.
  * 
  * @file genetic_optimizer.c
- * @author Jason Qiu, Celery Meng
+ * @author Celery Meng, Jason Qiu
  * @date 2018-05-17
  */
 #include "genetic_optimizer/genetic_optimizer.h"
@@ -22,6 +22,7 @@ double reproductive_rate = 0.;
 p_chromosome_t template_chromosome = NULL;
 p_array_t(p_chromosome_t) population = NULL;
 p_array_t(p_chromosome_t) children = NULL;
+p_chromosome_t elite = NULL;
 bool *is_copyable = NULL;
 
 /**
@@ -92,6 +93,8 @@ void initialize_genetic_optimizer(int density, double rate) {
             current_gene++;
         }
     }
+    elite = new_chromosome_copy_from(template_chromosome);
+    elite->makespan = INT_MAX;
     initialize_population();
 }
 
@@ -106,7 +109,7 @@ void destroy_genetic_optimizer() {
 
 void initialize_population() {
     population = new_array(p_chromosome_t, population_density * 2);
-    children = new_array(p_chromosome_t, (int)(population_density * reproductive_rate));
+    children = new_array(p_chromosome_t, population_density);
     for (int i = 0; i < population_density; i++) {
         push_back(population, get_random_chromosome());
     }
@@ -122,6 +125,10 @@ p_chromosome_t GOX(p_chromosome_t father, p_chromosome_t mother) {
     p_chromosome_t child = new_chromosome();
     size_t i = uniform_int_distribution(0, mother->size - 1);
     size_t j = uniform_int_distribution(0, mother->size - 1);
+    while (i == j) {
+        i = uniform_int_distribution(0, mother->size - 1);
+        j = uniform_int_distribution(0, mother->size - 1);
+    }
     size_t k = uniform_int_distribution(0, father->size);
     if (i > j) {
         swap_size_t(&i, &j);
@@ -156,11 +163,6 @@ p_chromosome_t GOX(p_chromosome_t father, p_chromosome_t mother) {
         }
     }
     mutate(child);
- //   for (int i = 0; i < child->size; i++) {
- //       printf("%d", child->genes[i]);
- //   }
- //   putchar('\n');
-
     return child;
 }
 
@@ -168,8 +170,8 @@ void evolve() {
     resize(children, 0);
     int indexA, indexB;
     for (int i = 0; i < population_density * reproductive_rate; i++) {
-        indexA = abs(lround(normal_distribution(0, population_density / 2)));
-        indexB = abs(lround(normal_distribution(0, population_density / 2)));
+        indexA = abs(lround(normal_distribution(0, population_density / 1.5)));
+        indexB = abs(lround(normal_distribution(0, population_density / 1.5)));
         if (indexA >= population_density) indexA = population_density - 1;
         if (indexB >= population_density) indexB = population_density - 1;
         push_back(children, GOX(population->data[indexA], population->data[indexB]));
@@ -184,11 +186,52 @@ void evolve() {
         makespan(population->data[i]);
     }
     qsort(begin(population), size(population), sizeof(front(population)), compare_chromosome_makespan);
-    decode(front(population));
-    target_order->num_of_jobs;
-    target_order->makespan = front(population)->makespan;
+    if (front(population)->makespan < elite->makespan) {
+        delete_chromosome(elite);
+        elite = new_chromosome_copy_from(front(population));
+        target_order->makespan = elite->makespan;
+    }
 }
 
-void genetic_optimize() {
-    evolve();
+void genetic_optimize(int epoch) {
+    target_order->makespan = INT_MAX;
+    static int count = 0;
+    int last_makespan = INT_MAX;
+
+    while (epoch--) {
+        if (target_order->makespan < last_makespan) {
+            last_makespan = target_order->makespan;
+            if (epoch < 1000000) {
+                epoch = 1000000;
+            }
+        }
+        if (count % 50000 == 0) {
+            for (p_chromosome_t *i = begin(population); i != end(population); i++) {
+                shuffle(*i);
+            }
+        }
+#ifndef _DEBUG
+        if (count % 10000 == 0) {
+            printf("%d\n", target_order->makespan);
+        }
+#endif
+        if (population->data[0]->makespan == population->data[4]->makespan) {
+            for (size_t i = 0; i < size(population) / 2; i++) {
+                mutate(population->data[i]);
+                mutate(population->data[i]);
+                mutate(population->data[i]);
+                mutate(population->data[i]);
+                mutate(population->data[i]);
+                mutate(population->data[i]);
+                mutate(population->data[i]);
+                mutate(population->data[i]);
+                mutate(population->data[i]);
+                mutate(population->data[i]);
+                makespan(population->data[i]);
+            }
+        }
+        evolve();
+        count++;
+    }
+    decode(elite);   
 }

@@ -48,7 +48,7 @@ void destroy_chromosome(p_chromosome_t chromosome);
  * @public
  * @brief Calculates the corresponding operation indexes of the specified chromosome.
  * 
- * @param chromosome Specified chromosome.。
+ * @param chromosome Specified chromosome.
  */
 void calculate_indexes(p_chromosome_t chromosome);
 /**
@@ -62,7 +62,7 @@ void decode(p_chromosome_t chromosome);
  * @public
  * @brief Returns the makespan of the specified chromosome.
  * 
- * @param chromosome Specified chromosome.。
+ * @param chromosome Specified chromosome.
  * @return Makespan.
  */
 int makespan(p_chromosome_t chromosome);

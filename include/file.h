@@ -1,5 +1,5 @@
 /**
- * @brief 定义 I/O 相关操作。
+ * @brief I/O-related functions.
  * 
  * @file file.h
  * @author Jason Qiu
@@ -13,37 +13,35 @@
 
 /**
  * @public
- * @brief 从文件中读入订单信息。
+ * @brief Reads the order information from a file.
  * 
- * @param input_order 读入的订单信息所要存储的订单。
- * @param path 文件路径。
+ * @param input_order Order in which the information will be stored.
+ * @param path File path.
  */
 void read_from_file(p_order_t input_order, const char *path);
 
 /**
  * @public
- * @brief 从控制台读入订单信息。
+ * @brief Reads the order information from the console.
  * 
- * @param input_order 读入的订单信息所要存储的订单。
+ * @param input_order Order in which the information will be stored.
  */
 void read_from_console(p_order_t input_order);
 
 /**
  * @public
- * @brief 向文件中输出给定订单的工序规划。
+ * @brief Writes the schedule of the specified order to a file.
  * 
- * @param output_order 给定订单。
- * @param path 文件路径。
- * @author Celery Meng
+ * @param output_order Specified order.
+ * @param path File path.
  */
 void write_to_file(p_order_t output_order, const char *path);
 
 /**
  * @public
- * @brief 向控制台中输出给定订单的工序规划。
+ * @brief Writes the schedule to the console.
  * 
- * @param output_order 给定订单。
- * @author Celery Meng
+ * @param output_order Specified order.
  */
 void write_to_console(p_order_t output_order);
 

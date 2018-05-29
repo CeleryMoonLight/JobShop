@@ -2,7 +2,7 @@
  * @brief Implementation of util.h
  * 
  * @file util.c
- * @author Jason Qiu
+ * @author Celery Meng, Jason Qiu
  * @date 2018-05-25
  */
 #include "util.h"
@@ -23,7 +23,7 @@ void swap_size_t(size_t *a, size_t *b) {
 }
 
 void initialize_random_engine() {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
 }
 
 void initialize_random_engine_with_seed(unsigned int seed) {

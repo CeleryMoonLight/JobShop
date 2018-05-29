@@ -1,5 +1,5 @@
 /**
- * @brief 数据结构。
+ * @brief Abstract data types.
  * 
  * @file ADT.h
  * @author Jason Qiu

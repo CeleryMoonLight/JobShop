@@ -2,7 +2,7 @@
  * @brief Implentation of chromosome_pool.h
  * 
  * @file chromosome_pool.c
- * @author Jason Qiu, Celery Meng
+ * @author Celery Meng, Jason Qiu
  * @date 2018-05-18
  */
 #include "genetic_optimizer/chromosome_pool.h"
@@ -34,7 +34,7 @@ void initialize_chromosome_pool(size_t capacity) {
 }
 
 void destroy_chromosome_pool() {
-    delete_queue(pointer_queue);
+    free(pointer_queue);
     pointer_queue = NULL;
     assert(memory_pool != NULL);
     for (p_chromosome_t pointer = memory_pool; pointer < memory_pool + pool_capacity; pointer++) {

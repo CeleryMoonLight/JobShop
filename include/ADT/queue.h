@@ -1,5 +1,5 @@
 /**
- * @brief 宏实现的队列模板。
+ * @brief Queue template implemented by marcos.
  * 
  * @file queue.h
  * @author Jason Qiu
@@ -9,11 +9,13 @@
 #define _QUEUE_H_
 
 #include "../base.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 /**
- * @brief 从给定类型生成对应的 queue_t 类型。
+ * @brief Generates queue_t(type) of the specified type.
  * 
- * @param type 给定类型。
+ * @param type Specified type.
  */
 #define define_queue(type)\
 \
@@ -85,8 +87,9 @@ queue_vtable_##type##_t queue_vtable_##type = {\
 };\
 \
 p_queue_##type##_t new_queue_##type(const int capacity) {\
-    p_queue_##type##_t res = (p_queue_##type##_t)malloc(sizeof(queue_##type##_t));\
-    res->data = (type *)malloc(sizeof(type) * capacity);\
+    p_queue_##type##_t res = NULL;\
+    res = (p_queue_##type##_t)calloc(1, sizeof(queue_##type##_t));\
+    res->data = (type *)calloc(capacity, sizeof(type));\
     res->begin = res->data; \
     res->end = res->data;   \
     res->capacity = capacity;\
@@ -95,27 +98,21 @@ p_queue_##type##_t new_queue_##type(const int capacity) {\
     return res;\
 }
 
-/**
- * @brief 指定类型的队列。
- * 
- * @param type 给定类型。
- * @sa new_queue
- */
 #define p_queue_t(type) \
-    queue_##type##_t *
-/**
- * @brief 构造指定类型的队列。
- * 
- * @param type 给定类型。
- * @param capacity 队列容量。
+    p_queue_##type##_t
+ /**
+ * @brief Constructs queue_t(type).
+ *
+ * @param type Specified type.
+ * @param capacity Max capacity.
  * @sa p_queue_t, delete_queue
  */
 #define new_queue(type, capacity)\
     new_queue_##type(capacity)
-/**
- * @brief 销毁指定的队列。
- * 
- * @param pointer 指定队列。
+ /**
+ * @brief Destroys the specified queue.
+ *
+ * @param pointer Specified queue.
  * @sa new_queue
  */
 #define delete_queue(pointer)\

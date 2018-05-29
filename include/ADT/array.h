@@ -1,5 +1,5 @@
 /**
- * @brief 宏实现的数组模板。
+ * @brief Array template implemented by marcos.
  * 
  * @file array.h
  * @author Jason Qiu
@@ -11,9 +11,9 @@
 #include "../base.h"
 
 /**
- * @brief 从给定类型生成对应的 array_t 类型。
+ * @brief Generates array_t(type) of the specified type.
  * 
- * @param type 给定类型。
+ * @param type Specified type.
  */
 #define define_array(type)\
 \
@@ -112,28 +112,22 @@ p_array_##type##_t new_array_##type(const int capacity) {\
     return res;\
 }
 
-/**
- * @brief 指定类型的数组。
- * 
- * @param type 给定类型。
- * @sa new_array
- */
 #define p_array_t(type) \
     array_##type##_t *
 /**
- * @brief 构造指定类型的数组。
+ * @brief Constructs array_t(type).
  * 
- * @param type 给定类型。
- * @param capacity 数组容量。
+ * @param type Specified type.
+ * @param capacity Max capacity.
  * @sa p_array_t, delete_array
  */
 #define new_array(type, capacity)\
     new_array_##type(capacity)
 /**
- * @brief 销毁指定的数组。
+ * @brief Destroys the specified array.
  * 
- * @param pointer 指定数组。
- * @sa new_queue
+ * @param pointer Specified array.
+ * @sa new_array
  */
 #define delete_array(pointer)\
     {\
